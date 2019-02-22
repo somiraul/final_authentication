@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="container jumbotron">
+    <form>
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" placeholder="Enter email" id="email">
+        </div>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" placeholder="Username" id="username">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" placeholder="Password" id="password">
+        </div>
+        <div class="form-group">
+            <label for="secretquestion">Secret Question</label>
+            <input type="text" class="form-control" placeholder="Secret question" id="secret_question">
+        </div>
+        <div class="form-group">
+            <label for="secretanswer">Password</label>
+            <input type="text" class="form-control" placeholder="Secret answer" id="secret_answer">
+        </div>
+        {% for role in roles %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input role" data-role="{{ role.role }}" value="{{ role.id }}">
+                <label class="form-check-label text-capitalize" for="checkbox">{{ role.name }}</label>
+            </div>
+        {% endfor %}
+    </form>
+    <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $("#submit").click(function () {
+            var email    = $("#email").val();
+            var username = $("#username").val();
+            var password = $("#password").val();
+            var secret_question = $("#secret_question").val();
+            var secret_answer = $("#secret_answer").val();
+            role               = $(".role:checked").map(function(){
+                $(".role").attr('disabled', 'disabled');
+                return this.value
+            }).get();
+
+            var data = {
+              email: email,
+              username: username,
+              password: password,
+              secret_question : secret_question,
+              secret_answer : secret_answer,
+              role: role
+            };
+
+            console.log(data);
+
+            $.ajax({
+               method: 'POST',
+               url: "{{ path('add_user') }}",
+               data: data,
+               success: function (response) {
+                   alert(response);
+               }
+            });
+
+        });
+    </script>
+{% endblock %}

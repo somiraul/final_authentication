@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheet %}
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <div class="container jumbotron">
+        {% if error %}
+            <span class="error">{{ error.messageKey }}</span>
+        {% endif %}
+        <form method="POST" action="{{ path('login') }}">
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" name="_email" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="_password" placeholder="Password">
+            </div>
+            <input type="hidden" value="{{ csrf_token('authenticate') }}">
+            <button type="submit" class="btn btn-success">Login</button>
+        </form>
+    </div>
+
+{% endblock %}

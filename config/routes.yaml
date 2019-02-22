@@ -1,0 +1,15 @@
+index:
+    path: index
+    controller: App\Controller\WebsiteController::index
+
+user_register:
+    path: register
+    controller: App\Controller\WebsiteController::register
+
+add_user:
+    path: addUser
+    controller: App\Controller\WebsiteController::add_user
+
+login:
+    path: signin
+    controller: App\Controller\WebsiteController::login
